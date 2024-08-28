@@ -1,0 +1,17 @@
+services:
+  app:
+    container_name: everything-factorial
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+
+volumes:
+  app:
+
+networks:
+  app:
+    driver: bridge
