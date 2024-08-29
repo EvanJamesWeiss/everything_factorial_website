@@ -92,7 +92,6 @@ const Home = () => {
 
     return (
         <div>
-
             <Tooltip
                 title="5.739137229501807e+55!"
                 placement="top"
@@ -109,7 +108,13 @@ const Home = () => {
                     },
                 }}
             >
-                <Typography variant="h2" align="center">Everything Can Be A Factorial!</Typography>
+                <Typography
+                    variant="h2"
+                    align="center"
+                    sx={{margin: "auto", width: "50%"}}
+                >
+                    Everything Can Be A Factorial!
+                </Typography>
             </Tooltip>
             {/* A form with a multi-line text box and a submit button that calls a function when clicked */}
             <Box
