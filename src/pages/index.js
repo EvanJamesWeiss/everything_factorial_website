@@ -2,7 +2,9 @@
 
 import React from "react";
 import converter from "number-to-words";
-import {Box, Button, TextField, Tooltip, Typography} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
+import {factorialDigitCount, getFactorialNumber} from "../components/helpers/factorialMath";
+import FactorialText from "../components/basic/FactorialText";
 
 const Home = () => {
 
@@ -30,10 +32,8 @@ const Home = () => {
             return;
         }
 
-        const s = message.slice(0, -1);
-
         // Calculate the product of the ASCII values of the characters in the message
-        const factorialNumber = getFactorialNumber(s);
+        const factorialNumber = getFactorialNumber(message);
 
         // Set the factorial result
         setFactorial(factorialNumber + "!");
@@ -56,66 +56,11 @@ const Home = () => {
         setShowResults(true);
     };
 
-    const getFactorialNumber = (s) => {
-        let total = 1;
-        [...s].forEach((char) => {
-            total *= char.charCodeAt(0);
-        });
-
-        if (total === 1) {
-            return "0";
-        }
-
-        return total.toString();
-    }
-
-    const factorialDigitCount = (numberString) => {
-        const n = scientificStringToNumber(numberString);
-
-        const pi = Math.PI;
-        const e = Math.E;
-
-        // Stirling's approximation to estimate log10(n!)
-        let log10_n_factorial = 0.5 * Math.log10(2 * pi * n) + n * (Math.log10(n) - Math.log10(e));
-
-        // Number of digits
-        return Math.floor(log10_n_factorial) + 1;
-    }
-
-    const scientificStringToNumber = (str) => {
-        if (!str.includes("e")) {
-            return parseInt(str);
-        }
-        const [mantissa, exponent] = str.split("e");
-        return parseFloat(mantissa) * Math.pow(10, parseFloat(exponent));
-    }
-
     return (
         <div>
-            <Tooltip
-                title="5.739137229501807e+55!"
-                placement="top"
-                slotProps={{
-                    popper: {
-                        modifiers: [
-                            {
-                                name: 'offset',
-                                options: {
-                                    offset: [0, -15],
-                                },
-                            },
-                        ],
-                    },
-                }}
-            >
-                <Typography
-                    variant="h2"
-                    align="center"
-                    sx={{margin: "auto", width: "50%"}}
-                >
-                    Everything Can Be A Factorial!
-                </Typography>
-            </Tooltip>
+            <FactorialText variant="h2" customStyle={{margin: "auto", width: "50%"}}>
+                Everything Can Be A Factorial
+            </FactorialText>
             {/* A form with a multi-line text box and a submit button that calls a function when clicked */}
             <Box
                 component="form"
@@ -127,30 +72,9 @@ const Home = () => {
                     <TextField
                         id="filled-multiline-static"
                         label={
-                            <Tooltip
-                                title="1.4695933973210117e+85!"
-                                placement="top"
-                                slotProps={{
-                                    popper: {
-                                        modifiers: [
-                                            {
-                                                name: 'offset',
-                                                options: {
-                                                    offset: [0, -15],
-                                                },
-                                            },
-                                        ],
-                                    },
-                                }}
-                            >
-                                <Typography variant="h6">
-                                    Enter any text ending in an&nbsp;
-                                    <b>
-                                        Exclamation Mark
-                                    </b>
-                                    !
-                                </Typography>
-                            </Tooltip>
+                            <FactorialText variant="h6">
+                                Enter any text ending in an&nbsp;<b>Exclamation Mark</b>
+                            </FactorialText>
                         }
                         multiline
                         variant="filled"
@@ -159,26 +83,9 @@ const Home = () => {
                         sx={{width: '100%'}}
                     />
                     {showError && (
-                        <Tooltip
-                            title={"2.6446471366820776e+83!"}
-                            placement={"bottom"}
-                            slotProps={{
-                                popper: {
-                                    modifiers: [
-                                        {
-                                            name: 'offset',
-                                            options: {
-                                                offset: [0, -15],
-                                            },
-                                        },
-                                    ],
-                                },
-                            }}
-                        >
-                            <Typography variant="h6" align="center" color="error">
-                                The message must end in an exclamation mark!
-                            </Typography>
-                        </Tooltip>
+                        <FactorialText color="error">
+                            The message must end in an exclamation mark
+                        </FactorialText>
                     )}
                 </div>
                 <div style={{width: "30%", margin: "auto"}}>
@@ -188,13 +95,15 @@ const Home = () => {
                         onClick={handleSubmit}
                         sx={{width: '100%'}}
                     >
-                        Submit
+                        <FactorialText color="white">
+                            SUBMIT
+                        </FactorialText>
                     </Button>
                 </div>
             </Box>
             {showResults && (
                 <div>
-                    <Typography variant="h4" align="center">Results</Typography>
+                    <FactorialText variant="h4">Results</FactorialText>
                     <Typography variant="h6" align="center">Factorial: {factorial}</Typography>
                     {words && <Typography variant="h6" align="center">Words: {words}</Typography>}
                     {digitCount && <Typography variant="h6" align="center">Digit Count: {digitCount}</Typography>}
