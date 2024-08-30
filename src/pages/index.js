@@ -1,7 +1,6 @@
 // Filename - pages/index.js
 
 import React from "react";
-import converter from "number-to-words";
 import {Box, Button, TextField, Typography} from "@mui/material";
 import {factorialDigitCount, getFactorialNumber} from "../components/helpers/factorialMath";
 import FactorialText from "../components/basic/FactorialText";
@@ -13,7 +12,6 @@ const Home = () => {
 
     const [message, setMessage] = React.useState("");
     const [factorial, setFactorial] = React.useState("");
-    const [words, setWords] = React.useState("");
     const [digitCount, setDigitCount] = React.useState("");
 
     const validateMessage = () => {
@@ -38,17 +36,6 @@ const Home = () => {
         // Set the factorial result
         setFactorial(factorialNumber + "!");
 
-        // Convert the factorial number to words
-        // If the number contains an "e", it is a scientific notation number and cannot be converted
-        setWords("");
-        if (!factorialNumber.includes("e")) {
-            try {
-                setWords(converter.toWords(factorialNumber) + " factorial");
-            } catch {
-                // If the number is too large, the library will throw an error
-            }
-        }
-
         // Calculate the number of digits in the resulting factorial
         setDigitCount(factorialDigitCount(factorialNumber));
 
@@ -58,7 +45,7 @@ const Home = () => {
 
     return (
         <div>
-            <FactorialText variant="h2" customStyle={{margin: "auto", width: "50%"}}>
+            <FactorialText variant="h2" customStyle={{margin: "auto", width: {sx: "100%", md: "50%"}}}>
                 Everything Can Be A Factorial
             </FactorialText>
             {/* A form with a multi-line text box and a submit button that calls a function when clicked */}
@@ -68,11 +55,18 @@ const Home = () => {
                 noValidate
                 sx={{paddingBottom: "1rem"}}
             >
-                <div style={{width: "50%", margin: "auto", paddingBottom: '2rem'}}>
+                <Box
+                    sx={{
+                        width: {sx: "100%", md: "50%"},
+                        margin: "auto",
+                        paddingBottom: '2rem'
+                    }}
+                    component="main"
+                >
                     <TextField
                         id="filled-multiline-static"
                         label={
-                            <FactorialText variant="h6">
+                            <FactorialText customStyle={{fontSize: {xs: ".9rem", md: "1.5rem"}}}>
                                 Enter any text ending in an&nbsp;<b>Exclamation Mark</b>
                             </FactorialText>
                         }
@@ -87,7 +81,7 @@ const Home = () => {
                             The message must end in an exclamation mark
                         </FactorialText>
                     )}
-                </div>
+                </Box>
                 <div style={{width: "30%", margin: "auto"}}>
                     <Button
                         variant="contained"
@@ -104,9 +98,26 @@ const Home = () => {
             {showResults && (
                 <div>
                     <FactorialText variant="h4">Results</FactorialText>
-                    <Typography variant="h6" align="center">Factorial: {factorial}</Typography>
-                    {words && <Typography variant="h6" align="center">Words: {words}</Typography>}
-                    {digitCount && <Typography variant="h6" align="center">Digit Count: {digitCount}</Typography>}
+                    <Typography variant="h6" align="center">
+                        <FactorialText
+                            customStyle={{backgroundColor: "#1976d2", padding: ".5rem"}}
+                            color="white"
+                            variant="h5"
+                        >
+                            Factorial
+                        </FactorialText>
+                        {factorial}
+                    </Typography>
+                    {digitCount && <Typography variant="h6" align="center">
+                        <FactorialText
+                            customStyle={{backgroundColor: "#1976d2", padding: "1rem"}}
+                            color="white"
+                            variant="h5"
+                        >
+                            Digit Count (how many digits in factorial result)
+                        </FactorialText>
+                        {digitCount}
+                    </Typography>}
                 </div>
             )}
         </div>

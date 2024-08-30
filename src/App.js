@@ -9,7 +9,6 @@ import {
     Route,
 } from "react-router-dom";
 import Home from "./pages/index";
-import Test from "./pages/test";
  
 function App() {
     return (
@@ -17,7 +16,6 @@ function App() {
             <SiteHeader />
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route path="/test" element={<Test />} />
             </Routes>
         </Router>
     );
